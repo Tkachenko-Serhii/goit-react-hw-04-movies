@@ -1,14 +1,22 @@
 import { useState, useEffect, lazy } from "react";
-import { Link, useLocation, Route, useParams, Routes } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  Route,
+  useParams,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { alert } from "@pnotify/core";
 
 import { getMovieDetails } from "../../api/api";
 import s from "./MovieDetailsPage.module.css";
 
-const Cast = lazy(() => import("../Cast"));
+const Cast = lazy(() => import("../Cast/Cast"));
 const Reviews = lazy(() => import("../Reviews"));
 
 export default function MovieDetailsPage() {
+  const navigation = useNavigate();
   const url = useLocation();
   const { id } = useParams();
   const [filmDetails, setFilmDetails] = useState([]);
@@ -18,23 +26,17 @@ export default function MovieDetailsPage() {
   }, [id]);
 
   const onClickBack = () => {
-    url.push(url.state?.from ?? "/");
-    if (url?.state?.from === "/movies") {
-      url.push({
-        pathname: url.state.from,
-        search: `?query=${url.state.search}`,
-      });
-    }
+    navigation(-1);
   };
 
-  if (!filmDetails) {
-    return alert({
-      type: "error",
-      text: `No films for request`,
-    });
-  }
   return (
     <>
+      {filmDetails === [] &&
+        alert({
+          type: "error",
+          text: `No films for request`,
+        })}
+
       <button type='button' className={s.button} onClick={onClickBack}>
         Back
       </button>
@@ -64,7 +66,6 @@ export default function MovieDetailsPage() {
           </Link>
         </li>
       </ul>
-
       <Routes>
         <Route path={`${url.pathname}/cast`} element={<Cast id={id} />} />
         <Route path={`${url.pathname}/reviews`} element={<Reviews id={id} />} />
