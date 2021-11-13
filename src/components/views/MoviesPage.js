@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { alert } from "@pnotify/core";
 
 import { searchFilms } from "../../api/api";
@@ -11,7 +11,6 @@ export default function MoviesPage() {
   const location = useLocation();
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
-  console.log(useParams);
   useEffect(() => {
     if (location.search !== "") {
       const prevQuery = location.search.split("=")[1];

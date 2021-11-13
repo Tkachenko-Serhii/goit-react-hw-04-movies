@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Link,
-  useNavigate,
-  useLocation,
-  Route,
-  Outlet,
-  useParams,
-} from "react-router-dom";
+import { Link, useLocation, Route, useParams } from "react-router-dom";
 import { alert } from "@pnotify/core";
 
 import { getMovieDetails } from "../../api/api";
@@ -15,17 +8,22 @@ import Reviews from "../Reviews";
 import s from "./MovieDetailsPage.module.css";
 
 export default function MovieDetailsPage() {
-  const navigation = useNavigate();
-  const location = useLocation();
+  const url = useLocation();
   const { id } = useParams();
   const [filmDetails, setFilmDetails] = useState(null);
 
   useEffect(() => {
     return getMovieDetails(id).then(setFilmDetails);
   }, [id]);
-  console.log(filmDetails);
+
   const onClickBack = () => {
-    navigation(location.state?.from ?? "/");
+    // url.push(url.state?.from ?? "/");
+    // if (url?.state?.from === "/movies") {
+    //   url.push({
+    //     pathname: url.state.from,
+    //     search: `?query=${url.state.search}`,
+    //   });
+    // }
   };
 
   if (!filmDetails) {
@@ -59,8 +57,7 @@ export default function MovieDetailsPage() {
         <li key={0} className={s.link}>
           <Link
             to={{
-              pathname: `/movies/${filmDetails.id}/cast`,
-              state: { from: location.state?.from },
+              pathname: `${url.pathname}${filmDetails.id}/cast`,
             }}
           >
             Cast
@@ -69,18 +66,15 @@ export default function MovieDetailsPage() {
         <li key={1} className={s.link}>
           <Link
             to={{
-              pathname: `/movies/${filmDetails.id}/reviews`,
-              state: { from: location.state?.from },
+              pathname: `${url.pathname}${filmDetails.id}/reviews`,
             }}
           >
             Reviews
           </Link>
         </li>
       </ul>
-
-      <Route path={`${location}/cast`} element={<Cast id={id} />} />
-      <Route path={`${location}/reviews`} element={<Reviews id={id} />} />
-      <Outlet />
+      <Route path={`${url.pathname}/cast`} element={<Cast id={id} />} />
+      <Route path={`${url.pathname}/reviews`} element={<Reviews id={id} />} />
     </>
   );
 }
