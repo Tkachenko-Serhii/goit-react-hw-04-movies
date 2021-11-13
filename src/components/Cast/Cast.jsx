@@ -12,17 +12,16 @@ export default function Cast({ id }) {
     return getMovieCredits(id).then(setActors);
   }, [id]);
 
-  if (!actors)
-    return alert({
-      type: "error",
-      text: "We have no information about the cast",
-    });
-
   return (
     <>
-      {actors.cast.length === 0 && <p>We have no reviews for this movie</p>}
+      {actors === [] &&
+        alert({
+          type: "error",
+          text: "We have no information about the cast",
+        })}
       <ul className={s.list}>
-        {actors.cast.map(
+        <li>1</li>
+        {/* {actors.cast.map(
           (actor) =>
             actor.profile_path && (
               <li key={actor.id} className={s.item}>
@@ -33,7 +32,7 @@ export default function Cast({ id }) {
                 <h2 className={s.title}>{actor.name}</h2>
               </li>
             )
-        )}
+        )} */}
       </ul>
     </>
   );

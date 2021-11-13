@@ -12,12 +12,15 @@ import { alert } from "@pnotify/core";
 import { getMovieDetails } from "../../api/api";
 import s from "./MovieDetailsPage.module.css";
 
-const Cast = lazy(() => import("../Cast/Cast"));
-const Reviews = lazy(() => import("../Reviews"));
+const Cast = lazy(() => import("../Cast" /* webpackChunkName: "cast" */));
+const Reviews = lazy(() =>
+  import("../Reviews" /* webpackChunkName: "reviews" */)
+);
 
 export default function MovieDetailsPage() {
   const navigation = useNavigate();
-  const url = useLocation();
+  const location = useLocation();
+  const url = location.pathname;
   const { id } = useParams();
   const [filmDetails, setFilmDetails] = useState([]);
 
@@ -45,6 +48,16 @@ export default function MovieDetailsPage() {
         <h3 className={s.title}>Overview</h3>
         <p>{filmDetails.overview}</p>
         <h3 className={s.title}>Genres</h3>
+        <ul className={s.listGenres}>
+          {filmDetails.genres?.map(
+            (genre) =>
+              filmDetails.genres && (
+                <li className={s.itemGenre} key={genre.id}>
+                  <p>{genre.name}</p>
+                </li>
+              )
+          )}
+        </ul>
       </div>
       <ul>
         <li key={0} className={s.link}>
@@ -67,8 +80,8 @@ export default function MovieDetailsPage() {
         </li>
       </ul>
       <Routes>
-        <Route path={`${url.pathname}/cast`} element={<Cast id={id} />} />
-        <Route path={`${url.pathname}/reviews`} element={<Reviews id={id} />} />
+        <Route path='cast' element={<Cast id={id} />} />
+        <Route path='reviews' element={<Reviews id={id} />} />
       </Routes>
     </>
   );
