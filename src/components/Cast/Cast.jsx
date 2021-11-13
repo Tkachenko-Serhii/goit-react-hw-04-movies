@@ -6,7 +6,8 @@ import { getMovieCredits } from "../../api/api";
 import s from "./Cast.module.css";
 
 export default function Cast({ id }) {
-  const [actors, setActors] = useState(null);
+  const [actors, setActors] = useState([]);
+
   useEffect(() => {
     return getMovieCredits(id).then(setActors);
   }, [id]);

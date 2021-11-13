@@ -1,29 +1,30 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation, Route, useParams } from "react-router-dom";
+import { useState, useEffect, lazy } from "react";
+import { Link, useLocation, Route, useParams, Routes } from "react-router-dom";
 import { alert } from "@pnotify/core";
 
 import { getMovieDetails } from "../../api/api";
-import Cast from "../Cast";
-import Reviews from "../Reviews";
 import s from "./MovieDetailsPage.module.css";
+
+const Cast = lazy(() => import("../Cast"));
+const Reviews = lazy(() => import("../Reviews"));
 
 export default function MovieDetailsPage() {
   const url = useLocation();
   const { id } = useParams();
-  const [filmDetails, setFilmDetails] = useState(null);
+  const [filmDetails, setFilmDetails] = useState([]);
 
   useEffect(() => {
     return getMovieDetails(id).then(setFilmDetails);
   }, [id]);
 
   const onClickBack = () => {
-    // url.push(url.state?.from ?? "/");
-    // if (url?.state?.from === "/movies") {
-    //   url.push({
-    //     pathname: url.state.from,
-    //     search: `?query=${url.state.search}`,
-    //   });
-    // }
+    url.push(url.state?.from ?? "/");
+    if (url?.state?.from === "/movies") {
+      url.push({
+        pathname: url.state.from,
+        search: `?query=${url.state.search}`,
+      });
+    }
   };
 
   if (!filmDetails) {
@@ -42,22 +43,12 @@ export default function MovieDetailsPage() {
         <h3 className={s.title}>Overview</h3>
         <p>{filmDetails.overview}</p>
         <h3 className={s.title}>Genres</h3>
-        <ul className={s.list}>
-          {filmDetails.genres?.map(
-            (genre) =>
-              filmDetails.genres && (
-                <li key={genre.id} className={s.item}>
-                  {genre.name}
-                </li>
-              )
-          )}
-        </ul>
       </div>
       <ul>
         <li key={0} className={s.link}>
           <Link
             to={{
-              pathname: `${url.pathname}${filmDetails.id}/cast`,
+              pathname: "cast",
             }}
           >
             Cast
@@ -66,15 +57,18 @@ export default function MovieDetailsPage() {
         <li key={1} className={s.link}>
           <Link
             to={{
-              pathname: `${url.pathname}${filmDetails.id}/reviews`,
+              pathname: "reviews",
             }}
           >
             Reviews
           </Link>
         </li>
       </ul>
-      <Route path={`${url.pathname}/cast`} element={<Cast id={id} />} />
-      <Route path={`${url.pathname}/reviews`} element={<Reviews id={id} />} />
+
+      <Routes>
+        <Route path={`${url.pathname}/cast`} element={<Cast id={id} />} />
+        <Route path={`${url.pathname}/reviews`} element={<Reviews id={id} />} />
+      </Routes>
     </>
   );
 }
