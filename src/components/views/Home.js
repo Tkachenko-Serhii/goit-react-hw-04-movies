@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <>
-      <h1 className={s.title}>Most Popular Films</h1>
+      <h1 className={s.title}>TRENDING MOVIES</h1>
       <MoviesList movies={movies}></MoviesList>
     </>
   );

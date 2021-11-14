@@ -1,12 +1,5 @@
 import { useState, useEffect, lazy } from "react";
-import {
-  Link,
-  useLocation,
-  Route,
-  useParams,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { Link, Route, useParams, Routes, useNavigate } from "react-router-dom";
 import { alert } from "@pnotify/core";
 
 import { getMovieDetails } from "../../api/api";
@@ -19,8 +12,6 @@ const Reviews = lazy(() =>
 
 export default function MovieDetailsPage() {
   const navigation = useNavigate();
-  const location = useLocation();
-  const url = location.pathname;
   const { id } = useParams();
   const [filmDetails, setFilmDetails] = useState([]);
 
@@ -43,46 +34,68 @@ export default function MovieDetailsPage() {
       <button type='button' className={s.button} onClick={onClickBack}>
         Back
       </button>
-      <div>
-        <h2 className={s.title}>{filmDetails.original_title}</h2>
-        <h3 className={s.title}>Overview</h3>
-        <p>{filmDetails.overview}</p>
-        <h3 className={s.title}>Genres</h3>
-        <ul className={s.listGenres}>
-          {filmDetails.genres?.map(
-            (genre) =>
-              filmDetails.genres && (
-                <li className={s.itemGenre} key={genre.id}>
-                  <p>{genre.name}</p>
-                </li>
-              )
+      <div className={s.container}>
+        <div className={s.movie_img}>
+          {filmDetails.poster_path ? (
+            <img
+              src={`https://image.tmdb.org/t/p/w300${filmDetails.poster_path}`}
+              alt={filmDetails.original_title}
+            />
+          ) : (
+            <img
+              src='https://bookslibs.info/assets/general/images/no_poster.jpg'
+              alt={filmDetails.original_title}
+            />
           )}
-        </ul>
+        </div>
+        <div className={s.description}>
+          <div>
+            <h2 className={s.title}>{filmDetails.original_title}</h2>
+            <h3 className={s.title__mod}>Overview</h3>
+            <p className={s.overviev}>{filmDetails.overview}</p>
+            <h3 className={s.title__mod}>Genres</h3>
+            <ul className={s.list}>
+              {filmDetails.genres?.map(
+                (genre) =>
+                  filmDetails.genres && (
+                    <li className={s.item} key={genre.id}>
+                      <p>{genre.name}</p>
+                    </li>
+                  )
+              )}
+            </ul>
+          </div>
+          <ul className={s.list}>
+            <li key={0} className={s.list__item}>
+              <Link
+                to={{
+                  pathname: "cast",
+                }}
+              >
+                <button type='button' className={s.link}>
+                  Cast
+                </button>
+              </Link>
+            </li>
+            <li key={1} className={s.list__item}>
+              <Link
+                to={{
+                  pathname: "reviews",
+                }}
+              >
+                <button type='button' className={s.link}>
+                  Reviews
+                </button>
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <Routes>
+          <Route path='cast' element={<Cast id={id} />} />
+          <Route path='reviews' element={<Reviews id={id} />} />
+        </Routes>
       </div>
-      <ul>
-        <li key={0} className={s.link}>
-          <Link
-            to={{
-              pathname: "cast",
-            }}
-          >
-            Cast
-          </Link>
-        </li>
-        <li key={1} className={s.link}>
-          <Link
-            to={{
-              pathname: "reviews",
-            }}
-          >
-            Reviews
-          </Link>
-        </li>
-      </ul>
-      <Routes>
-        <Route path='cast' element={<Cast id={id} />} />
-        <Route path='reviews' element={<Reviews id={id} />} />
-      </Routes>
     </>
   );
 }

@@ -41,21 +41,23 @@ export default function MoviesPage() {
 
   return (
     <>
-      <form className={s.form} onSubmit={onSubmit}>
-        <input
-          className={s.input}
-          type='text'
-          autoComplete='off'
-          autoFocus
-          placeholder='Enter search query'
-          onChange={(e) => setQuery(e.target.value)}
-          value={query}
-        />
-        <button type='submit' className={s.button}>
-          Search
-        </button>
-      </form>
-      <MoviesList movies={movies}></MoviesList>
+      <div className={s.search}>
+        <form className={s.form} onSubmit={onSubmit}>
+          <input
+            className={s.input}
+            type='text'
+            autoComplete='off'
+            autoFocus
+            placeholder='Enter search query'
+            onChange={(e) => setQuery(e.target.value)}
+            value={query}
+          />
+          <button type='submit' className={s.button}>
+            Search
+          </button>
+        </form>
+      </div>
+      {movies && <MoviesList movies={movies} />}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Header from "./components/Header";
+import "./App.css";
 
 const Home = lazy(() =>
   import("./components/views/Home" /* webpackChunkName: "home-page" */)
@@ -16,7 +17,7 @@ const MoviesDetailsPage = lazy(() =>
 
 export default function App() {
   return (
-    <>
+    <div className='container'>
       <Header />
       <Suspense fallback={<div>Loader</div>}>
         <Routes>
@@ -25,6 +26,6 @@ export default function App() {
           <Route path='/movies/:id/*' element={<MoviesDetailsPage />} />
         </Routes>
       </Suspense>
-    </>
+    </div>
   );
 }

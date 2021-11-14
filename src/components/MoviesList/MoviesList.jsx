@@ -23,7 +23,25 @@ export default function MoviesList({ movies }) {
                   },
                 }}
               >
-                {movie.original_title}
+                <div className={s.movie}>
+                  {movie.poster_path ? (
+                    <img
+                      className={s.movie_img}
+                      src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                      alt={movie.original_title}
+                    />
+                  ) : (
+                    <img
+                      className={s.movie_img}
+                      src='https://bookslibs.info/assets/general/images/no_poster.jpg'
+                      alt={movie.original_title}
+                    />
+                  )}
+                </div>
+                <div className={s.movie_info}>
+                  <h2 className={s.movie_title}>{movie.original_title}</h2>
+                  <span className={s.movie_raiting}>{movie.vote_average}</span>
+                </div>
               </Link>
             </li>
           )

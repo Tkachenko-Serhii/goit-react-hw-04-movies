@@ -21,7 +21,7 @@ export default function Reviews({ id }) {
         })}
       <ul className={s.list}>
         <li>2</li>
-        {/* {reviews.map(
+        {/* {reviews.results.map(
           (review) =>
             review.author && (
               <li key={review.id} className={s.item}>
