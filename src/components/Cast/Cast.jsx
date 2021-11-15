@@ -11,7 +11,6 @@ export default function Cast({ id }) {
   useEffect(() => {
     return getMovieCredits(id).then(setActors);
   }, [id]);
-  console.log(actors);
 
   return (
     <>
