@@ -72,19 +72,16 @@
 }
 
 .button {
-  /* background-image: url(../../pictures/back.png); */
+  background-image: url(../../images/arrow.svg);
   width: 30px;
-  height: 30px;
+  height: 33px;
   background-repeat: no-repeat;
   background-size: cover;
   border: none;
   cursor: pointer;
   margin-bottom: 16px;
   background-color: transparent;
-}
-
-.button:hover {
-  /* background-image: url(../../pictures/backHover.png); */
+  fill: #640a0a;
 }
 
 @media screen and (min-width: 768px) {

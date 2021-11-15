@@ -5,9 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url(../src/images/background.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: rgb(12, 12, 90);
 }
 
 code {
@@ -17,8 +15,6 @@ code {
 
 img {
   display: block;
-  max-width: 100%;
-  height: auto;
 }
 
 html {
@@ -52,7 +48,6 @@ h4,
 h5,
 h6,
 p,
-ul,
-figure {
+ul {
   margin: 0;
 }

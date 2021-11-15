@@ -70,5 +70,6 @@
 }
 .movie_img {
   border-radius: 4px;
+  max-width: 265px;
   height: 398px;
 }

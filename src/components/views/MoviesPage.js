@@ -4,6 +4,7 @@ import { alert } from "@pnotify/core";
 
 import { searchFilms } from "../../api/api";
 import MoviesList from "../MoviesList";
+import LoadMore from "../LoadMore";
 import s from "./MoviesPage.module.css";
 
 export default function MoviesPage() {
@@ -11,10 +12,16 @@ export default function MoviesPage() {
   const location = useLocation();
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+
+  const onLoadMore = () => {
+    setPage(page + 1);
+  };
+
   useEffect(() => {
     if (location.search !== "") {
       const prevQuery = location.search.split("=")[1];
-      searchFilms(prevQuery)
+      searchFilms(prevQuery, page)
         .then((films) => films.results)
         .then((arr) => {
           if (arr.length === 0)
@@ -22,11 +29,11 @@ export default function MoviesPage() {
               type: "error",
               text: `No films for request: ${prevQuery}`,
             });
-          setMovies(arr);
+          setMovies((prevState) => [...prevState, ...arr]);
         });
       setQuery(prevQuery);
     }
-  }, [location.search]);
+  }, [location.search, page]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -58,6 +65,7 @@ export default function MoviesPage() {
         </form>
       </div>
       {movies && <MoviesList movies={movies} />}
+      {movies.length > 0 && <LoadMore onLoadMore={onLoadMore} />}
     </>
   );
 }

@@ -1,8 +1,9 @@
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Link, Route, useParams, Routes, useNavigate } from "react-router-dom";
 import { alert } from "@pnotify/core";
 
 import { getMovieDetails } from "../../api/api";
+import Loader from "../Loader";
 import s from "./MovieDetailsPage.module.css";
 
 const Cast = lazy(() => import("../Cast" /* webpackChunkName: "cast" */));
@@ -31,9 +32,8 @@ export default function MovieDetailsPage() {
           text: `No films for request`,
         })}
 
-      <button type='button' className={s.button} onClick={onClickBack}>
-        Back
-      </button>
+      <button type='button' className={s.button} onClick={onClickBack}></button>
+
       <div className={s.container}>
         <div className={s.movie_img}>
           {filmDetails.poster_path ? (
@@ -48,8 +48,8 @@ export default function MovieDetailsPage() {
             />
           )}
         </div>
-        <div className={s.description}>
-          <div>
+        <div>
+          <div className={s.description}>
             <h2 className={s.title}>{filmDetails.original_title}</h2>
             <h3 className={s.title__mod}>Overview</h3>
             <p className={s.overviev}>{filmDetails.overview}</p>
@@ -89,12 +89,13 @@ export default function MovieDetailsPage() {
               </Link>
             </li>
           </ul>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path='cast' element={<Cast id={id} />} />
+              <Route path='reviews' element={<Reviews id={id} />} />
+            </Routes>
+          </Suspense>
         </div>
-
-        <Routes>
-          <Route path='cast' element={<Cast id={id} />} />
-          <Route path='reviews' element={<Reviews id={id} />} />
-        </Routes>
       </div>
     </>
   );

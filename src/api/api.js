@@ -3,14 +3,14 @@ const API_KEY = `0e03d2359202713e59ab7c25960ab620`;
 const TRENDING_FILMS = `${BASE_URL}/trending/all/day?api_key=${API_KEY}`;
 const SEARCH_FILMS = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&include_adult=false`;
 
-export function getTrending() {
-  const url = `${TRENDING_FILMS}&page=1`;
+export function getTrending(page) {
+  const url = `${TRENDING_FILMS}&page=${page}`;
   return fetch(url).then((res) => res.json());
 }
 
-export function searchFilms(searchQuery) {
-  return fetch(`${SEARCH_FILMS}&query=${searchQuery}&page=1`).then((res) =>
-    res.json()
+export function searchFilms(searchQuery, page) {
+  return fetch(`${SEARCH_FILMS}&query=${searchQuery}&page=${page}`).then(
+    (res) => res.json()
   );
 }
 

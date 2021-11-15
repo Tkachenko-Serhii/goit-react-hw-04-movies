@@ -26,10 +26,13 @@ export default function Cast({ id }) {
             actor.profile_path && (
               <li key={actor.id} className={s.item}>
                 <img
+                  className={s.image}
                   src={"https://image.tmdb.org/t/p/w300/" + actor.profile_path}
                   alt={actor.name}
                 />
-                <h2 className={s.title}>{actor.name}</h2>
+                <div className={s.title_box}>
+                  <h2 className={s.title}>{actor.name}</h2>
+                </div>
               </li>
             )
         )}
