@@ -20,14 +20,18 @@ export function getMovieDetails(id) {
   ).then((res) => res.json());
 }
 
-export function getMovieCredits(id) {
-  return fetch(
+export async function getMovieCredits(id) {
+  const res = await fetch(
     `${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=en-US`
-  ).then((res) => res.json());
+  );
+  const data = await res.json();
+  return data.cast;
 }
 
-export function getMovieReviews(id) {
-  return fetch(
+export async function getMovieReviews(id) {
+  const res = await fetch(
     `${BASE_URL}/movie/${id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
-  ).then((res) => res.json());
+  );
+  const data = await res.json();
+  return data.results;
 }

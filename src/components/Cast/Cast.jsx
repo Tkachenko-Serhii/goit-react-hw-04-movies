@@ -11,6 +11,7 @@ export default function Cast({ id }) {
   useEffect(() => {
     return getMovieCredits(id).then(setActors);
   }, [id]);
+  console.log(actors);
 
   return (
     <>
@@ -20,8 +21,7 @@ export default function Cast({ id }) {
           text: "We have no information about the cast",
         })}
       <ul className={s.list}>
-        <li>1</li>
-        {/* {actors.cast.map(
+        {actors.map(
           (actor) =>
             actor.profile_path && (
               <li key={actor.id} className={s.item}>
@@ -32,7 +32,7 @@ export default function Cast({ id }) {
                 <h2 className={s.title}>{actor.name}</h2>
               </li>
             )
-        )} */}
+        )}
       </ul>
     </>
   );

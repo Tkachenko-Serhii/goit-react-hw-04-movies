@@ -11,7 +11,7 @@ export default function Reviews({ id }) {
   useEffect(() => {
     return getMovieReviews(id).then(setReviews);
   }, [id]);
-
+  console.log(reviews);
   return (
     <>
       {reviews === [] &&
@@ -20,8 +20,7 @@ export default function Reviews({ id }) {
           text: "Sorry, we did not find any reviews for this movie.",
         })}
       <ul className={s.list}>
-        <li>2</li>
-        {/* {reviews.results.map(
+        {reviews.map(
           (review) =>
             review.author && (
               <li key={review.id} className={s.item}>
@@ -29,7 +28,7 @@ export default function Reviews({ id }) {
                 <p className={s.description}>{review.content}</p>
               </li>
             )
-        )} */}
+        )}
       </ul>
     </>
   );
