@@ -11,7 +11,7 @@ export default function Reviews({ id }) {
   useEffect(() => {
     return getMovieReviews(id).then(setReviews);
   }, [id]);
-  console.log(reviews);
+
   return (
     <>
       {reviews === [] &&

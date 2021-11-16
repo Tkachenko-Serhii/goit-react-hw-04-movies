@@ -1,5 +1,4 @@
 .container {
-  display: flex;
   padding: 20px 15px;
   margin-bottom: 50px;
   background-color: #e7e7e7;
@@ -36,7 +35,6 @@
 
 .list {
   display: flex;
-
   margin-bottom: 20px;
 }
 
@@ -82,6 +80,22 @@
   margin-bottom: 16px;
   background-color: transparent;
   fill: #640a0a;
+}
+
+@media screen and (max-width: 767px) {
+  .movie_img {
+    margin: 0 auto;
+  }
+
+  .list {
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    display: flex;
+  }
 }
 
 @media screen and (min-width: 768px) {

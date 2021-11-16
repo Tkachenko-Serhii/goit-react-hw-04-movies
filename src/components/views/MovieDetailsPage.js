@@ -1,5 +1,12 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { Link, Route, useParams, Routes, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Route,
+  useParams,
+  Routes,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { alert } from "@pnotify/core";
 
 import { getMovieDetails } from "../../api/api";
@@ -12,6 +19,8 @@ const Reviews = lazy(() =>
 );
 
 export default function MovieDetailsPage() {
+  const location = useLocation();
+  console.log(location);
   const navigation = useNavigate();
   const { id } = useParams();
   const [filmDetails, setFilmDetails] = useState([]);
@@ -21,7 +30,8 @@ export default function MovieDetailsPage() {
   }, [id]);
 
   const onClickBack = () => {
-    navigation(-1);
+    let { from } = location.state || { from: { pathname: "/" } };
+    navigation(from);
   };
 
   return (
