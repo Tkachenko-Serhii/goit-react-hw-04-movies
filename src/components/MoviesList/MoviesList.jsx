@@ -13,14 +13,12 @@ export default function MoviesList({ movies }) {
             <li key={movie.id} className={s.item}>
               <Link
                 className={s.link}
-                to={{
-                  pathname: `/movies/${movie.id}`,
-                  state: {
-                    from:
-                      location.pathname === "/"
-                        ? "/"
-                        : "/movies" + location.search,
-                  },
+                to={`/movies/${movie.id}`}
+                state={{
+                  from:
+                    location.pathname === "/"
+                      ? "/"
+                      : "/movies" + location.search,
                 }}
               >
                 <div className={s.movie}>

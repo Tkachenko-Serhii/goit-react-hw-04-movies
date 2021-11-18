@@ -20,7 +20,6 @@ const Reviews = lazy(() =>
 
 export default function MovieDetailsPage() {
   const location = useLocation();
-  console.log(location);
   const navigation = useNavigate();
   const { id } = useParams();
   const [filmDetails, setFilmDetails] = useState([]);
@@ -30,7 +29,7 @@ export default function MovieDetailsPage() {
   }, [id]);
 
   const onClickBack = () => {
-    let { from } = location.state || { from: { pathname: "/" } };
+    const { from } = location.state;
     navigation(from);
   };
 
@@ -81,6 +80,7 @@ export default function MovieDetailsPage() {
                 to={{
                   pathname: "cast",
                 }}
+                state={location.state}
               >
                 <button type='button' className={s.link}>
                   Cast
@@ -92,6 +92,7 @@ export default function MovieDetailsPage() {
                 to={{
                   pathname: "reviews",
                 }}
+                state={location.state}
               >
                 <button type='button' className={s.link}>
                   Reviews
